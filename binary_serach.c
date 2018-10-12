@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int BinarySearch(int *array, int array_count, int find_key, int is_asc)
+int BinarySearch1(int *array, int array_count, int find_key, int is_asc)
 {
 	/*
 	 * 二分法查找函数
@@ -51,6 +51,39 @@ int BinarySearch(int *array, int array_count, int find_key, int is_asc)
 	}
 }
 
+int BinarySearch2(int *array, int key, int low, int high, int is_asc)
+{
+    int mid;
+    while (low <= high)
+    {
+        mid = (low + high) / 2;
+        if (key == array[mid])
+        {
+            return mid;
+        }
+        else if (key < array[mid])
+        {
+            if(is_asc == 0) 
+		    high = mid - 1;
+	    else
+		    low = mid + 1;
+        }
+        else
+        {
+            if(is_asc == 0)
+		    low = mid + 1;
+	    else
+		    high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+int BinarySearch(int *array, int array_count, int find_key, int is_asc)
+{
+	return BinarySearch2(array, find_key, 0, array_count - 1, is_asc);
+}
+
 int main()
 {
 	/*
@@ -58,9 +91,9 @@ int main()
 	 * */	
 	printf("start test asc array...\n");
 	
-	int c_arr_len = 4878237;
+	int c_arr_len = 453323;
 
-	/array: test array, ascending order.   result: save serach result, 0 is ok, 1 is error
+	//array: test array, ascending order.   result: save serach result, 0 is ok, 1 is error
 	int array[c_arr_len], result[c_arr_len * 2];
 
 	//init array
